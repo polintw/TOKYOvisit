@@ -1,0 +1,32 @@
+{
+  "name": "visiting_map",
+  "version": "1.0.0",
+  "description": "simple app for establishing visited stadium during the Taipei2017Universiade",
+  "main": "server.js",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^7.3.0",
+    "body-parser": "^1.17.2",
+    "browserify": "^14.4.0",
+    "draft-js": "^0.10.3",
+    "express": "^4.15.4",
+    "express-react-views": "^0.10.2",
+    "mkdirp": "^0.5.1",
+    "path": "^0.12.7",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "devDependencies": {
+    "immutability-helper": "^2.4.0",
+    "jsonfile": "^4.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Berlin Chou",
+  "license": "ISC",
+  "keywords": []
+}
