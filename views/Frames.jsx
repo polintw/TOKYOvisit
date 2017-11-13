@@ -12,31 +12,37 @@ export default class Frames extends React.Component {
 
   _renderStyle_frame(liGeneral){
     const graphicMap = [
-      //[width, height, top, left, <p>top, ,<p>textAlign]
-      ['15%', "60%", '10%', "7%", "15%", 'right'],
-      ['30%', '33%', '0', '25%', '60%', 'right'],
-      ['15%', '60%', '37%','25%', '70%', 'right'],
-      ['15%', '60%', '0', '58%', '70%', 'left'],
-      ['15%', '60%', '25%', '77%', '15%', 'left']
+      //[width, height, top, left, <p>top, ,<p>justifyContern, <p>width , <p>left, boxShadow]
+      ['29%', "36%", '-6%', "8%", "15%", 'flex-end', '39%', '0', '0.1vw -0.1vw 0.3vw'],
+      ['20%', '62%', '-6%', '44.5%', '60%', 'flex-end', '35%', '0','0.1vw 0.05vw 0.3vw'],
+      ['21%', '63%', '40%','8%', '69%', 'flex-start', '48%', '52%', '-0.1vw 0.1vw 0.4vw'],
+      ['30%', '35%', '67%', '37%', '69%', 'flex-end', '47%', '0', '-0.1vw 0.1vw 0.3vw'],
+      ['21%', '66%', '36.5%', '74%', '71%', 'flex-start', '43%', '57%', '0.1vw 0.05vw 0.4vw']
     ];
     let frameStyle = graphicMap.map(function(mapInfo, index){
       let liCustom = {
         width: mapInfo[0],
         height: mapInfo[1],
         top: mapInfo[2],
-        left: mapInfo[3]
+        left: mapInfo[3],
+        boxShadow: mapInfo[8]
       }
       let liStyle = Object.assign(liCustom, liGeneral);
       let liFrameNameStyle = {
-        width: '100%',
-        height: '15%',
+        display: 'flex',
+        justifyContent: mapInfo[5],
+        width: mapInfo[6],
+        height: '5vh',
         position: 'absolute',
         top: mapInfo[4],
-        left: '0',
+        left: mapInfo[7],
         margin: '0',
-        padding: '0',
-        textAlign: mapInfo[5],
-        color: 'white'
+        padding: '0 0.7vh 1vh 0.7vh',
+        boxSizing: 'border-box',
+        borderBottom: '0.1vw solid #FFFFFF',
+        fontSize: '1.8vw',
+        letterSpacing: '0.15vw',
+        color: '#FFFFFF'
       }
       return ({
         'liStyle': liStyle,
@@ -69,7 +75,8 @@ export default class Frames extends React.Component {
           position: 'relative',
           top: '0',
           left: '0',
-          padding: '0'
+          padding: '0',
+          margin: '0'
         },
         img_Preview_ordinary: {
           maxWidth: '110%',
@@ -90,7 +97,7 @@ export default class Frames extends React.Component {
         li_general: {
           position: "absolute",
           listStyle: 'none',
-          borderRadius: '2px',
+          borderRadius: '8px',
           overflow: 'hidden',
           cursor: 'pointer'
         },
@@ -116,19 +123,16 @@ export default class Frames extends React.Component {
             onClick={self._handleClick_setView}>
             <img
               src={catalogueData[catalogue[frame][0]].src+'.jpg'}
-              style={catalogueData[catalogue[frame][0]].rotate?style.img_Preview_rotate:style.img_Preview_ordinary}/>
+              style={catalogueData[catalogue[frame][0]].rotate?index==4?Object.assign({filter: "brightness(80%)"}, style.img_Preview_rotate):style.img_Preview_rotate:style.img_Preview_ordinary}/>
             <p style={frameStyle[index].liFrameNameStyle}>
-              {frame}
+              <span style={{alignSelf: "flex-end"}}>
+                {frame}
+              </span>
             </p>
           </li>
         )
       }
     );
-    galleryList.push(
-      <li
-        key = {'key_galleryList_'+5}
-        style = {Object.assign(style.li_empty, style.li_general)}></li>
-    )
 
     return(
       <div style={style.view_Frames}>

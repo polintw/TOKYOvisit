@@ -2,8 +2,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require("path");
-const jsonfile = require('jsonfile');
-const update = require('immutability-helper');
 
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
@@ -33,52 +31,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname+'/statics/public')));
 
-app.use('/statics/:type/:file', function(req, res){
-  let filetype = req.params.type;
-  let filename = req.params.file;
-  let options = {
-      root: __dirname + '/statics/'+filetype
-  };
-  let mimetype = {
-    'html' : 'text/html',
-    'ico' : 'image/x-icon',
-    'jpg' : 'image/jpeg',
-    'png' : 'image/png',
-    'gif' : 'image/gif',
-    'css' : 'text/css',
-    'js' : 'application/javascript',
-    'json': 'application/json'
-  }[filetype];
-  console.log(mimetype)
-  res.setHeader('Content-Type', mimetype)
-  res.sendFile(filename, options, function (err) {
-    if (err) {
-      console.log(err);
-      res.status(err.status).end();
-    }else {
-      console.log('Sent:', filename);
-    }
-  });
-})
-
-app.get('/user/station/status', function(req, res){
-    console.log('recieve "GET" request for station status');
-    jsonfile.readFile(userData, function(err, data){
-      if(err){
-        throw err;
-        res.end({
-          success: false,
-          err: err
-        });
-      }
-      let station = req.query.station;
-      res.json({
-        success: true,
-        status: data[station].status
-      });
-    })
-})
-
 app.use('/bundle',function(req, res){
   res.setHeader('Content-Type', 'application/javascript');
   console.log('requesting for index: 2nd, bundle.js');
@@ -101,15 +53,16 @@ app.use('/', function(req, res){
   let htmlHead = ReactDOMServer.renderToStaticMarkup(
     head(
      null,
-     title({dangerouslySetInnerHTML:{__html: ""}}),
+     title({dangerouslySetInnerHTML:{__html: " tokyo & Step | Gallery"}}),
      meta({charSet: "utf-8"}),
-	   meta({name: "title", content: ""}),
-     meta({name: "description", content: ""}),
+	   meta({name: "title", content: " tokyo & Step | Gallery"}),
+     meta({name: "description", content: "Glance at some Moment, and some difference."}),
      meta({property: "og:url", content: ""}),
-     meta({property: "og:image", content: ""}),
+     meta({property: "og:image", content: "photos/2017-11-11.png"}),
      script({src: "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js", type: "text/javascript"}),
-     script({src: "https://unpkg.com/axios/dist/axios.min.js", type: "text/javascript"}),
      script({src: "catalogue.js", type: "text/javascript"}),
+     script({src: "intelligence.js", type: "text/javascript"}),
+     script({src: "catalogueData.js", type: "text/javascript"}),
      link({type:'text/css', rel: "stylesheet", href: "https://fonts.googleapis.com/earlyaccess/notosanstc.css"}),
      link({type:'text/css', rel: "stylesheet", href: "http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext"})
    )

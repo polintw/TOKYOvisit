@@ -9,8 +9,7 @@ export default class Index extends React.Component {
     super(props);
     this.state = {
       view: 'frames',
-      galleryChoice: null,
-      coverPhoto: {}
+      galleryChoice: null
     };
     this._render_view = this._render_view.bind(this);
     this._handleClick_setView = this._handleClick_setView.bind(this);
@@ -24,7 +23,9 @@ export default class Index extends React.Component {
     switch(this.state.view){
       case 'overview':
         return(
-          <Overview/>
+          <Overview
+            galleryChoice={this.state.galleryChoice}
+            _handleClick_setView={this._handleClick_setView}/>
         )
         break;
       case 'gallery':
@@ -37,7 +38,6 @@ export default class Index extends React.Component {
       case 'frames':
         return(
           <Frames
-            coverPhoto = {this.state.coverPhoto}
             _handleClick_setView={this._handleClick_setView}/>
         )
         break;
@@ -49,6 +49,14 @@ export default class Index extends React.Component {
     }
   }
 
+  componentWillMount(){
+    document.getElementsByTagName('body')[0].setAttribute('style', "margin: 0;")
+  }
+
+  componentWillUpdate(){
+    document.getElementsByTagName('body')[0].setAttribute('style', "margin: 0;")
+  }
+
   render(){
     const style = {
       outline: {
@@ -56,7 +64,8 @@ export default class Index extends React.Component {
 		    height: "100%",
         position: "relative",
         margin: '0',
-        fontFamily: "'Noto Sans TC', '微軟正黑體', 'Lato', 'Helvetica Neue', Helvetica, Futura, sans-serif, Arial"
+        backgroundColor: '#F9F9F9',
+        fontFamily: "'Lato', 'Noto Sans TC', '微軟正黑體', 'Helvetica Neue', Helvetica, Futura, sans-serif, Arial"
       }
     }
     return(
